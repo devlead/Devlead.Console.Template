@@ -1,0 +1,11 @@
+{
+  "author": "Mattias Karlsson",
+  "classifications": [ "Console" ],
+  "name": "Devlead console template",
+  "identity": "Devlead.Console",
+  "shortName": "devleadconsole",
+  "sourceName": "Devlead.Console",
+  "tags": {
+    "language": "C#"
+  }
+}

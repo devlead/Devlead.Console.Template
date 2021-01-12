@@ -1,0 +1,44 @@
+name: Build
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - develop
+      - hotfix/*
+
+jobs:
+  build:
+    name: Build
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest]
+    steps:
+      - name: Get the sources
+        uses: actions/checkout@v2
+
+      - name: Fetch all history for all tags and branches
+        run: git fetch --prune --unshallow
+
+      - name: Install .NET Core SDK 3.1.405
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '3.1.405'
+
+      - name: Install .NET Core SDK
+        uses: actions/setup-dotnet@v1
+
+      - name: Run Cake script
+        run: |
+          echo ::group::".NET Tool Restore"
+          dotnet tool restore
+          echo ::endgroup::
+          dotnet cake --target=Pack
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: artifacts
+          path: artifacts
