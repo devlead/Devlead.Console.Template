@@ -1,5 +1,5 @@
 using System.ComponentModel;
-using Devlead.Console.Commands.Validate;
+using Devlead.Console.Commands.Validation;
 using Spectre.Console.Cli;
 
 namespace Devlead.Console.Commands.Setting
