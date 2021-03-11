@@ -7,6 +7,12 @@
       "commands": [
         "dotnet-cake"
       ]
+    },
+    "dpi": {
+      "version": "2021.3.11.25",
+      "commands": [
+        "dpi"
+      ]
     }
   }
 }

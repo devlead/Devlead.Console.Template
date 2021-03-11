@@ -31,6 +31,9 @@ jobs:
         uses: actions/setup-dotnet@v1
 
       - name: Run Cake script
+        env:
+          NuGetReportSettings_SharedKey: ${{ secrets.NUGETREPORTSETTINGS_SHAREDKEY }}
+          NuGetReportSettings_WorkspaceId: ${{ secrets.NUGETREPORTSETTINGS_WORKSPACEID }}
         run: |
           echo ::group::".NET Tool Restore"
           dotnet tool restore
