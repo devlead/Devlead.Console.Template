@@ -17,14 +17,20 @@ Setup(
 
         var gh = context.GitHubActions();
         var version = assertedVersions.LegacySemVerPadded;
+        var branchName = assertedVersions.BranchName;
+        var isMainBranch = StringComparer.OrdinalIgnoreCase.Equals("main", branchName);
 
-        context.Information("Building version {0}", version);
+        context.Information("Building version {0} (Branch: {1}, IsMain: {2})",
+            version,
+            branchName,
+            isMainBranch);
 
         var artifactsPath = context
                             .MakeAbsolute(context.Directory("./artifacts"));
 
         return new BuildData(
             version,
+            isMainBranch,
             "src",
             "src/Devlead.Console.Template/Devlead.Console.Template.csproj",
             new DotNetCoreMSBuildSettings()
@@ -112,4 +118,35 @@ Task("Clean")
             }
         )
     )
+.Then("Push-GitHub-Packages")
+    .WithCriteria<BuildData>( (context, data) => data.ShouldPushGitHubPackages())
+    .DoesForEach<BuildData, FilePath>(
+        static (data, context)
+            => context.GetFiles(data.NuGetOutputPath.FullPath + "/*.nupkg"),
+        static (data, item, context)
+            => context.DotNetCoreNuGetPush(
+                item.FullPath,
+            new DotNetCoreNuGetPushSettings
+            {
+                Source = data.GitHubNuGetSource,
+                ApiKey = data.GitHubNuGetApiKey
+            }
+        )
+    )
+.Then("Push-NuGet-Packages")
+    .WithCriteria<BuildData>( (context, data) => data.ShouldPushNuGetPackages())
+    .DoesForEach<BuildData, FilePath>(
+        static (data, context)
+            => context.GetFiles(data.NuGetOutputPath.FullPath + "/*.nupkg"),
+        static (data, item, context)
+            => context.DotNetCoreNuGetPush(
+                item.FullPath,
+                new DotNetCoreNuGetPushSettings
+                {
+                    Source = data.NuGetSource,
+                    ApiKey = data.NuGetApiKey
+                }
+        )
+    )
+.Then("GitHub-Actions")
 .Run();
