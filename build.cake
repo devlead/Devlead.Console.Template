@@ -33,7 +33,7 @@ Setup(
             isMainBranch,
             "src",
             "src/Devlead.Console.Template/Devlead.Console.Template.csproj",
-            new DotNetCoreMSBuildSettings()
+            new DotNetMSBuildSettings()
                 .SetConfiguration("Release")
                 .SetVersion(version)
                 .WithProperty("Copyright", $"Mattias Karlsson © {DateTime.UtcNow.Year}")
@@ -64,18 +64,18 @@ Task("Clean")
     )
 .Then("Restore")
     .Does<BuildData>(
-        static (context, data) => context.DotNetCoreRestore(
+        static (context, data) => context.DotNetRestore(
             data.ProjectRoot.FullPath,
-            new DotNetCoreRestoreSettings {
+            new DotNetRestoreSettings {
                 MSBuildSettings = data.MSBuildSettings
             }
         )
     )
 .Then("DPI")
     .Does<BuildData>(
-        static (context, data) => context.DotNetCoreTool(
+        static (context, data) => context.DotNetTool(
                 "tool",
-                new DotNetCoreToolSettings {
+                new DotNetToolSettings {
                     ArgumentCustomization = args => args
                                                         .Append("run")
                                                         .Append("dpi")
@@ -98,9 +98,9 @@ Task("Clean")
 .Then("Build")
     .Default()
     .Does<BuildData>(
-        static (context, data) => context.DotNetCoreBuild(
+        static (context, data) => context.DotNetBuild(
             data.ProjectRoot.FullPath,
-            new DotNetCoreBuildSettings {
+            new DotNetBuildSettings {
                 NoRestore = true,
                 MSBuildSettings = data.MSBuildSettings
             }
@@ -108,9 +108,9 @@ Task("Clean")
     )
 .Then("Pack")
     .Does<BuildData>(
-        static (context, data) => context.DotNetCorePack(
+        static (context, data) => context.DotNetPack(
             data.TemplateProject.FullPath,
-            new DotNetCorePackSettings {
+            new DotNetPackSettings {
                 NoBuild = true,
                 NoRestore = true,
                 OutputDirectory = data.NuGetOutputPath,
@@ -124,9 +124,9 @@ Task("Clean")
         static (data, context)
             => context.GetFiles(data.NuGetOutputPath.FullPath + "/*.nupkg"),
         static (data, item, context)
-            => context.DotNetCoreNuGetPush(
+            => context.DotNetNuGetPush(
                 item.FullPath,
-            new DotNetCoreNuGetPushSettings
+            new DotNetNuGetPushSettings
             {
                 Source = data.GitHubNuGetSource,
                 ApiKey = data.GitHubNuGetApiKey
@@ -139,9 +139,9 @@ Task("Clean")
         static (data, context)
             => context.GetFiles(data.NuGetOutputPath.FullPath + "/*.nupkg"),
         static (data, item, context)
-            => context.DotNetCoreNuGetPush(
+            => context.DotNetNuGetPush(
                 item.FullPath,
-                new DotNetCoreNuGetPushSettings
+                new DotNetNuGetPushSettings
                 {
                     Source = data.NuGetSource,
                     ApiKey = data.NuGetApiKey
