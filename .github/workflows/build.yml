@@ -38,9 +38,3 @@ jobs:
         with:
           cake-version: tool-manifest
           target: GitHub-Actions
-
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: artifacts
-          path: artifacts
