@@ -22,15 +22,11 @@ jobs:
       - name: Fetch all history for all tags and branches
         run: git fetch --prune --unshallow
 
-      - name: Install .NET Core SDK 3.1.x
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: '3.1.x'
-
       - name: Install .NET Core SDK
         uses: actions/setup-dotnet@v1
 
       - name: Run Cake script
+        uses: cake-build/cake-action@v1
         env:
           NuGetReportSettings_SharedKey: ${{ secrets.NUGETREPORTSETTINGS_SHAREDKEY }}
           NuGetReportSettings_WorkspaceId: ${{ secrets.NUGETREPORTSETTINGS_WORKSPACEID }}
@@ -38,11 +34,10 @@ jobs:
           GH_PACKAGES_NUGET_APIKEY: ${{ secrets.GH_PACKAGES_NUGET_APIKEY }}
           NUGET_SOURCE: ${{ secrets.NUGET_SOURCE }}
           NUGET_APIKEY: ${{ secrets.NUGET_APIKEY }}
-        run: |
-          echo ::group::".NET Tool Restore"
-          dotnet tool restore
-          echo ::endgroup::
-          dotnet cake --target=GitHub-Actions
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          cake-version: tool-manifest
+          target: GitHub-Actions
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
