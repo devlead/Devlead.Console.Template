@@ -1,5 +1,5 @@
 // Install .NET Core Global tools.
-#tool "dotnet:https://api.nuget.org/v3/index.json?package=GitVersion.Tool&version=5.8.1"
+#tool "dotnet:https://api.nuget.org/v3/index.json?package=GitVersion.Tool&version=5.10.3"
 
 #load "build/records.cake"
 #load "build/helpers.cake"
@@ -117,6 +117,14 @@ Task("Clean")
                 MSBuildSettings = data.MSBuildSettings
             }
         )
+    )
+.Then("Upload-Artifacts")
+    .WithCriteria(BuildSystem.IsRunningOnGitHubActions, nameof(BuildSystem.IsRunningOnGitHubActions))
+    .Does<BuildData>(
+        static (context, data) => context
+            .GitHubActions()
+            .Commands
+            .UploadArtifact(data.ArtifactsPath, "artifacts")
     )
 .Then("Push-GitHub-Packages")
     .WithCriteria<BuildData>( (context, data) => data.ShouldPushGitHubPackages())
