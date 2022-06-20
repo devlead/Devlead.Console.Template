@@ -31,7 +31,6 @@ jobs:
           NuGetReportSettings_SharedKey: ${{ secrets.NUGETREPORTSETTINGS_SHAREDKEY }}
           NuGetReportSettings_WorkspaceId: ${{ secrets.NUGETREPORTSETTINGS_WORKSPACEID }}
           GH_PACKAGES_NUGET_SOURCE: ${{ secrets.GH_PACKAGES_NUGET_SOURCE }}
-          GH_PACKAGES_NUGET_APIKEY: ${{ secrets.GH_PACKAGES_NUGET_APIKEY }}
           NUGET_SOURCE: ${{ secrets.NUGET_SOURCE }}
           NUGET_APIKEY: ${{ secrets.NUGET_APIKEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
