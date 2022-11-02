@@ -78,6 +78,36 @@ Task("Clean")
                 .MSBuildSettings
         )
     )
+.Then("Integration-Tests")
+    .DoesForEach<BuildData, FilePath>(
+        static (data, context)
+            => context.GetFiles(data.BinaryOutputPath.FullPath + "/**/Devlead.Console.dll"),
+        static (data, item, context)
+            => context.DotNetTool(
+                item.FullPath,
+                new DotNetToolSettings {
+                    ArgumentCustomization = args => {
+                        context.Information("Testing {0}...", item);
+                        
+                        return args 
+                                .Append("console")
+                                .Append("mandatory")
+                                .Append("--command-option-flag")
+                                .AppendSwitchQuoted("--command-option-value", "=", data.Version);
+                    },
+                    HandleExitCode = exitCode => {
+                        if (exitCode == 0)
+                        {
+                            context.Information("Successfully tested {0}", item);
+                            return true;
+                        }
+
+                        throw new CakeException($"Failed testing {item} ({exitCode})");
+                    }
+                }
+            )
+    )
+    .DeferOnError()
 .Then("DPI")
     .Does<BuildData>(
         static (context, data) => context.DotNetTool(
