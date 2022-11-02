@@ -33,24 +33,31 @@ Setup(
             isMainBranch,
             "src",
             "src/Devlead.Console.Template/Devlead.Console.Template.csproj",
-            new DotNetMSBuildSettings()
-                .SetConfiguration("Release")
-                .SetVersion(version)
-                .WithProperty("Copyright", $"Mattias Karlsson © {DateTime.UtcNow.Year}")
-                .WithProperty("Authors", "devlead")
-                .WithProperty("Company", "devlead")
-                .WithProperty("PackageLicenseExpression", "MIT")
-                .WithProperty("PackageTags", "Console;Template")
-                .WithProperty("PackageDescription", "Mattias Karlsson's optinionated alternative to dotnet new console")
-                .WithProperty("PackageIconUrl", "https://cdn.jsdelivr.net/gh/devlead/Devlead.Console.Template/src/devlead.png")
-                .WithProperty("PackageIcon", "devlead.png")
-                .WithProperty("PackageProjectUrl", "https://github.com/devlead/Devlead.Console.Template")
-                .WithProperty("RepositoryUrl", "https://github.com/devlead/Devlead.Console.Template.git")
-                .WithProperty("RepositoryType", "git")
-                .WithProperty("ContinuousIntegrationBuild", gh.IsRunningOnGitHubActions ? "true" : "false")
-                .WithProperty("EmbedUntrackedSources", "true"),
             artifactsPath,
-            artifactsPath.Combine(version)
+            artifactsPath.Combine(version),
+            (data, msbuildsetting) => new DotNetMSBuildSettings
+                                                                {
+                                                                    ArgumentCustomization = args => args
+                                                                                                        .AppendQuoted("/property:TargetFrameworks=\\\"net6.0;net7.0\\\"")
+                                                                                                        .Append(msbuildsetting.Targets.Contains("Pack") ? string.Empty : "-restore"),
+                                                                }
+                                                                    .SetConfiguration("Release")
+                                                                    .SetVersion(data.Version)
+                                                                    .WithProperty("Copyright", $"Mattias Karlsson © {DateTime.UtcNow.Year}")
+                                                                    .WithProperty("Authors", "devlead")
+                                                                    .WithProperty("Company", "devlead")
+                                                                    .WithProperty("PackageLicenseExpression", "MIT")
+                                                                    .WithProperty("PackageTags", "Console;Template")
+                                                                    .WithProperty("PackageDescription", "Mattias Karlsson's optinionated alternative to dotnet new console")
+                                                                    .WithProperty("PackageIconUrl", "https://cdn.jsdelivr.net/gh/devlead/Devlead.Console.Template/src/devlead.png")
+                                                                    .WithProperty("PackageIcon", "devlead.png")
+                                                                    .WithProperty("PackageProjectUrl", "https://github.com/devlead/Devlead.Console.Template")
+                                                                    .WithProperty("RepositoryUrl", "https://github.com/devlead/Devlead.Console.Template.git")
+                                                                    .WithProperty("RepositoryType", "git")
+                                                                    .WithProperty("ContinuousIntegrationBuild", gh.IsRunningOnGitHubActions ? "true" : "false")
+                                                                    .WithProperty("EmbedUntrackedSources", "true")
+                                                                    .WithProperty("PackageOutputPath", data.NuGetOutputPath.FullPath)
+                                                                    .WithProperty("BaseOutputPath", data.BinaryOutputPath.FullPath + "/")
             );
     }
 );
@@ -62,15 +69,45 @@ Task("Clean")
     .Does<BuildData>(
         static (context, data) => context.CleanDirectories(data.DirectoryPathsToClean)
     )
-.Then("Restore")
+.Then("Build")
+    .Default()
     .Does<BuildData>(
-        static (context, data) => context.DotNetRestore(
+        static (context, data) => context.DotNetMSBuild(
             data.ProjectRoot.FullPath,
-            new DotNetRestoreSettings {
-                MSBuildSettings = data.MSBuildSettings
-            }
+            data
+                .MSBuildSettings
         )
     )
+.Then("Integration-Tests")
+    .DoesForEach<BuildData, FilePath>(
+        static (data, context)
+            => context.GetFiles(data.BinaryOutputPath.FullPath + "/**/Devlead.Console.dll"),
+        static (data, item, context)
+            => context.DotNetTool(
+                item.FullPath,
+                new DotNetToolSettings {
+                    ArgumentCustomization = args => {
+                        context.Information("Testing {0}...", item);
+                        
+                        return args 
+                                .Append("console")
+                                .Append("mandatory")
+                                .Append("--command-option-flag")
+                                .AppendSwitchQuoted("--command-option-value", "=", data.Version);
+                    },
+                    HandleExitCode = exitCode => {
+                        if (exitCode == 0)
+                        {
+                            context.Information("Successfully tested {0}", item);
+                            return true;
+                        }
+
+                        throw new CakeException($"Failed testing {item} ({exitCode})");
+                    }
+                }
+            )
+    )
+    .DeferOnError()
 .Then("DPI")
     .Does<BuildData>(
         static (context, data) => context.DotNetTool(
@@ -95,27 +132,15 @@ Task("Clean")
                 }
             )
     )
-.Then("Build")
-    .Default()
-    .Does<BuildData>(
-        static (context, data) => context.DotNetBuild(
-            data.ProjectRoot.FullPath,
-            new DotNetBuildSettings {
-                NoRestore = true,
-                MSBuildSettings = data.MSBuildSettings
-            }
-        )
-    )
 .Then("Pack")
     .Does<BuildData>(
-        static (context, data) => context.DotNetPack(
+        static (context, data) => context.DotNetMSBuild(
             data.TemplateProject.FullPath,
-            new DotNetPackSettings {
-                NoBuild = true,
-                NoRestore = true,
-                OutputDirectory = data.NuGetOutputPath,
-                MSBuildSettings = data.MSBuildSettings
-            }
+            data
+                .MSBuildSettings
+                .WithTarget("Pack")
+                .WithProperty("_IsPacking", "true")
+                .WithProperty("NoBuild", "true")
         )
     )
 .Then("Upload-Artifacts")

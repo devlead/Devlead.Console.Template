@@ -6,9 +6,9 @@ public record BuildData(
     bool IsMainBranch,
     DirectoryPath ProjectRoot,
     FilePath TemplateProject,
-    DotNetMSBuildSettings MSBuildSettings,
     DirectoryPath ArtifactsPath,
-    DirectoryPath OutputPath
+    DirectoryPath OutputPath,
+    Func<BuildData, DotNetMSBuildSettings, DotNetMSBuildSettings> MSBuildSettingsCustomization
     )
 {
     public DirectoryPath NuGetOutputPath { get; } = OutputPath.Combine("nuget");
@@ -26,12 +26,13 @@ public record BuildData(
                                                 !string.IsNullOrWhiteSpace(NuGetSource) &&
                                                 !string.IsNullOrWhiteSpace(NuGetApiKey);
 
-    public ICollection<DirectoryPath> DirectoryPathsToClean = new []{
+    public ICollection<DirectoryPath> DirectoryPathsToClean { get; } = new []{
         ArtifactsPath,
         OutputPath
     };
 
-
+    private DotNetMSBuildSettings msBuildSettings;
+    public DotNetMSBuildSettings MSBuildSettings => msBuildSettings ??= MSBuildSettingsCustomization(this, new DotNetMSBuildSettings());
 }
 
 private record ExtensionHelper(Func<string, CakeTaskBuilder> TaskCreate, Func<CakeReport> Run);
