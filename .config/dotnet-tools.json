@@ -3,13 +3,13 @@
   "isRoot": true,
   "tools": {
     "cake.tool": {
-      "version": "2.3.0",
+      "version": "3.0.0",
       "commands": [
         "dotnet-cake"
       ]
     },
     "dpi": {
-      "version": "2022.10.28.57",
+      "version": "2022.11.10.59",
       "commands": [
         "dpi"
       ]
