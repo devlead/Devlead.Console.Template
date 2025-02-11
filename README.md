@@ -23,7 +23,7 @@ Create a new project with specified name
 dotnet new devleadconsole -n MyConsole
 ```
 
-Create a new project with specified target framework `net6.0` or `net7.0` supported (*default `net7.0`*).
+Create a new project with specified target framework `net8.0` or `net9.0` supported (*default `net9.0`*).
 ```PowerShell
-dotnet new devleadconsole -n MyConsole --framework net6.0
+dotnet new devleadconsole -n MyConsole --framework net8.0
 ```
