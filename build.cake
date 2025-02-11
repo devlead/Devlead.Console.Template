@@ -1,5 +1,5 @@
 // Install .NET Core Global tools.
-#tool "dotnet:https://api.nuget.org/v3/index.json?package=GitVersion.Tool&version=5.10.3"
+#tool "dotnet:https://api.nuget.org/v3/index.json?package=GitVersion.Tool&version=5.12.0"
 
 #load "build/records.cake"
 #load "build/helpers.cake"
