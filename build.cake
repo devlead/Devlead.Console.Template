@@ -38,7 +38,7 @@ Setup(
             (data, msbuildsetting) => new DotNetMSBuildSettings
                                                                 {
                                                                     ArgumentCustomization = args => args
-                                                                                                        .AppendQuoted("/property:TargetFrameworks=\\\"net6.0;net7.0\\\"")
+                                                                                                        .AppendQuoted("/property:TargetFrameworks=\\\"net8.0;net9.0\\\"")
                                                                                                         .Append(msbuildsetting.Targets.Contains("Pack") ? string.Empty : "-restore"),
                                                                 }
                                                                     .SetConfiguration("Release")
