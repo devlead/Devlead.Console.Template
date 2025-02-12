@@ -16,7 +16,13 @@ Setup(
             });
 
         var gh = context.GitHubActions();
-        var version = assertedVersions.LegacySemVerPadded;
+        var buildDate = DateTime.UtcNow;
+        var runNumber = gh.IsRunningOnGitHubActions
+                            ? gh.Environment.Workflow.RunNumber
+                            : (short)((buildDate - buildDate.Date).TotalSeconds/3);
+        var version = FormattableString
+                        .Invariant($"{buildDate:yyyy.M.d}.{runNumber}");
+
         var branchName = assertedVersions.BranchName;
         var isMainBranch = StringComparer.OrdinalIgnoreCase.Equals("main", branchName);
 
