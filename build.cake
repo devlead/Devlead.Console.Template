@@ -1,5 +1,5 @@
 // Install .NET Core Global tools.
-#tool "dotnet:https://api.nuget.org/v3/index.json?package=GitVersion.Tool&version=5.10.3"
+#tool "dotnet:https://api.nuget.org/v3/index.json?package=GitVersion.Tool&version=6.1.0"
 
 #load "build/records.cake"
 #load "build/helpers.cake"
@@ -16,7 +16,13 @@ Setup(
             });
 
         var gh = context.GitHubActions();
-        var version = assertedVersions.LegacySemVerPadded;
+        var buildDate = DateTime.UtcNow;
+        var runNumber = gh.IsRunningOnGitHubActions
+                            ? gh.Environment.Workflow.RunNumber
+                            : (short)((buildDate - buildDate.Date).TotalSeconds/3);
+        var version = FormattableString
+                        .Invariant($"{buildDate:yyyy.M.d}.{runNumber}");
+
         var branchName = assertedVersions.BranchName;
         var isMainBranch = StringComparer.OrdinalIgnoreCase.Equals("main", branchName);
 
@@ -38,7 +44,7 @@ Setup(
             (data, msbuildsetting) => new DotNetMSBuildSettings
                                                                 {
                                                                     ArgumentCustomization = args => args
-                                                                                                        .AppendQuoted("/property:TargetFrameworks=\\\"net6.0;net7.0\\\"")
+                                                                                                        .AppendQuoted("/property:TargetFrameworks=\\\"net8.0;net9.0\\\"")
                                                                                                         .Append(msbuildsetting.Targets.Contains("Pack") ? string.Empty : "-restore"),
                                                                 }
                                                                     .SetConfiguration("Release")

@@ -17,27 +17,22 @@ jobs:
         os: [windows-latest]
     steps:
       - name: Get the sources
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Install .NET SDK 6.0.x
-        uses: actions/setup-dotnet@v3
+      - name: Install .NET SDK 8.0.x
+        uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '6.0.x'
-
-      - name: Install .NET SDK 7.0.x
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: '7.0.x'
+          dotnet-version: '8.0.x'
 
       - name: Install .NET SDK
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
         with:
           global-json-file: global.json
 
       - name: Run Cake script
-        uses: cake-build/cake-action@v1
+        uses: cake-build/cake-action@v3
         env:
           NuGetReportSettings_SharedKey: ${{ secrets.NUGETREPORTSETTINGS_SHAREDKEY }}
           NuGetReportSettings_WorkspaceId: ${{ secrets.NUGETREPORTSETTINGS_WORKSPACEID }}

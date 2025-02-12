@@ -4,18 +4,20 @@
     <PackageType>Template</PackageType>
     <AssemblyName>Devlead.Console.Template</AssemblyName>
     <Title>Devlead console templates for the .NET SDK.</Title>
-    <TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
+    <TargetFrameworks>net9.0;net8.0</TargetFrameworks>
     <IncludeContentInPack>true</IncludeContentInPack>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <ContentTargetFolders>content</ContentTargetFolders>
     <NoWarn>$(NoWarn)</NoWarn>
     <NoPackageAnalysis>true</NoPackageAnalysis>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
     <Content Include="templates\**\*" Exclude="templates\**\bin\**;templates\**\obj\**" />
     <Compile Remove="**\*" />
     <None Include="../devlead.png" Pack="true" PackagePath=""/>
+    <None Include="../../README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
   <Target Name="VersionBuild" BeforeTargets="PrepareForBuild" Condition="'$(TemplateVersion)'!=''">
@@ -23,7 +25,7 @@
   </Target>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All"/>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All"/>
   </ItemGroup>
 
 </Project>
