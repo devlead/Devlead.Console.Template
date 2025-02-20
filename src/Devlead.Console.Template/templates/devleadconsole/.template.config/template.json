@@ -4,7 +4,7 @@
   "name": "Devlead console template",
   "identity": "Devlead.Console",
   "shortName": "devleadconsole",
-  "sourceName": "Devlead.Console",
+  "sourceName": "devleadconsole",
   "tags": {
     "language": "C#"
   },
@@ -17,12 +17,12 @@
         "replaces": "TargetFrameworkValue",
         "choices": [
             {
-            "choice": "net8.0",
-            "description": "Target .NET 8"
+              "choice": "net8.0",
+              "description": "Target .NET 8"
             },
             {
-            "choice": "net9.0",
-            "description": "Target .NET 9"
+              "choice": "net9.0",
+              "description": "Target .NET 9"
             }
         ]
     }

@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30803.129
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Devlead.Console.Template", "Devlead.Console.Template\Devlead.Console.Template.csproj", "{F562A722-E783-4CE3-A580-A21EF7B4302C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Devlead.Console", "Devlead.Console.Template\templates\devleadconsole\Devlead.Console\Devlead.Console.csproj", "{CF5E6AEE-66C4-405E-9C52-2BE70FA9D887}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Devlead.Console", "Devlead.Console.Template\templates\devleadconsole\devleadconsole\devleadconsole.csproj", "{CF5E6AEE-66C4-405E-9C52-2BE70FA9D887}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{CB94EFD7-25CB-4BAA-85F5-32B048DBBF9E}"
 EndProject

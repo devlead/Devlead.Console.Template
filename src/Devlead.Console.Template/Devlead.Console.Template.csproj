@@ -14,15 +14,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="templates\**\*" Exclude="templates\**\bin\**;templates\**\obj\**" />
+    <Content Include="templates\**\*" Exclude="templates\**\bin\**;templates\**\obj\**;templates\Directory.Build.props" />
     <Compile Remove="**\*" />
     <None Include="../devlead.png" Pack="true" PackagePath=""/>
     <None Include="../../README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
-
-  <Target Name="VersionBuild" BeforeTargets="PrepareForBuild" Condition="'$(TemplateVersion)'!=''">
-    <XmlPoke XmlInputPath="templates\devleadconsole\console\console.csproj" Query="Project/ItemGroup/PackageReference/@Version" Value="$(TemplateVersion)" />
-  </Target>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All"/>
