@@ -4,6 +4,7 @@
 public record BuildData(
     string Version,
     bool IsMainBranch,
+    bool IsDevelopmentBranch,
     DirectoryPath ProjectRoot,
     FilePath TemplateProject,
     DirectoryPath ArtifactsPath,
@@ -17,7 +18,8 @@ public record BuildData(
     public string GitHubNuGetSource { get; } = System.Environment.GetEnvironmentVariable("GH_PACKAGES_NUGET_SOURCE");
     public string GitHubNuGetApiKey { get; } = System.Environment.GetEnvironmentVariable("GITHUB_TOKEN");
 
-    public bool ShouldPushGitHubPackages() => !string.IsNullOrWhiteSpace(GitHubNuGetSource)
+    public bool ShouldPushGitHubPackages() => (IsMainBranch || IsDevelopmentBranch) &&
+                                                !string.IsNullOrWhiteSpace(GitHubNuGetSource)
                                                 && !string.IsNullOrWhiteSpace(GitHubNuGetApiKey);
 
     public string NuGetSource { get; } = System.Environment.GetEnvironmentVariable("NUGET_SOURCE");

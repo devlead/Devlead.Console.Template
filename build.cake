@@ -25,11 +25,13 @@ Setup(
 
         var branchName = assertedVersions.BranchName;
         var isMainBranch = StringComparer.OrdinalIgnoreCase.Equals("main", branchName);
+        var isDevelopmentBranch = StringComparer.OrdinalIgnoreCase.Equals("development", branchName);
 
-        context.Information("Building version {0} (Branch: {1}, IsMain: {2})",
+        context.Information("Building version {0} (Branch: {1}, IsMain: {2}, IsDevelopment: {3})",
             version,
             branchName,
-            isMainBranch);
+            isMainBranch,
+            isDevelopmentBranch);
 
         var artifactsPath = context
                             .MakeAbsolute(context.Directory("./artifacts"));
@@ -37,6 +39,7 @@ Setup(
         return new BuildData(
             version,
             isMainBranch,
+            isDevelopmentBranch,
             "src",
             "src/Devlead.Console.Template/Devlead.Console.Template.csproj",
             artifactsPath,
@@ -87,7 +90,10 @@ Task("Clean")
 .Then("Integration-Tests")
     .DoesForEach<BuildData, FilePath>(
         static (data, context)
-            => context.GetFiles(data.BinaryOutputPath.FullPath + "/**/Devlead.Console.dll"),
+            => context.GetFiles(data.BinaryOutputPath.FullPath + "/**/devleadconsole.dll").ToArray()
+                is { Length: > 0 } files
+                    ? files
+                    : throw new CakeException("No integration tests found"),
         static (data, item, context)
             => context.DotNetTool(
                 item.FullPath,
