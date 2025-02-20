@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFrameWork Condition="$(TargetFrameworks) == ''">TargetFrameworkValue</TargetFrameWork>
+    <Nullable>enable</Nullable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Using Include="devleadconsole.Commands" />
+    <Using Include="devleadconsole.Commands.Setting" />
+    <Using Include="devleadconsole.Commands.Validation" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Devlead.Console" Version="2025.2.19.80" />
+  </ItemGroup>
+
+</Project>
