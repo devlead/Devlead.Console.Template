@@ -1,7 +1,7 @@
 using Spectre.Console;
 using Spectre.Console.Cli;
 
-namespace devleadconsole.Commands.Validation
+namespace DevleadConsole.Commands.Validation
 {
     public class ValidateStringAttribute : ParameterValidationAttribute
     {

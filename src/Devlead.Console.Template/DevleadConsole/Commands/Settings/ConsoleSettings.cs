@@ -1,7 +1,7 @@
 using System.ComponentModel;
 using Spectre.Console.Cli;
 
-namespace devleadconsole.Commands.Setting
+namespace DevleadConsole.Commands.Setting
 {
     public class ConsoleSettings : CommandSettings
     {

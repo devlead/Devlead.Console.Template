@@ -7,6 +7,8 @@
 
     static partial void ConfigureApp(AppServiceConfig appServiceConfig)
     {
+        appServiceConfig.SetApplicationName("DevleadConsole");
+
         appServiceConfig
             .AddCommand<ConsoleCommand>("console")
             .WithDescription("Example console command.")

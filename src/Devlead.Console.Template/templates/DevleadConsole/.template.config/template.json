@@ -4,7 +4,7 @@
   "name": "Devlead console template",
   "identity": "Devlead.Console",
   "shortName": "devleadconsole",
-  "sourceName": "devleadconsole",
+  "sourceName": "DevleadConsole",
   "tags": {
     "language": "C#"
   },
