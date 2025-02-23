@@ -1,0 +1,4 @@
+<Solution>
+    <Project Path="DevleadConsole/DevleadConsole.csproj" />
+    <Project Path="DevleadConsole.Tests/DevleadConsole.Tests.csproj" />
+</Solution>

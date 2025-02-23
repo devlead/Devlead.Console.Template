@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameWork Condition="$(TargetFrameworks) == ''">TargetFrameworkValue</TargetFrameWork>
+    <LangVersion>latest</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Using Include="DevleadConsole.Commands" />
+    <Using Include="Microsoft.Extensions.Logging.Testing" />
+    <Using Include="NUnit.Framework" />
+    <Using Include="Spectre.Console.Cli" />
+    <Using Include="Spectre.Console.Testing" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DevleadConsole\DevleadConsole.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="6.0.4">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Devlead.Testing.MockHttp" Version="2025.2.18.62" />
+    <PackageReference Include="Microsoft.Extensions.Diagnostics.Testing" Version="9.2.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
+    <PackageReference Include="NUnit" Version="4.3.2" />
+    <PackageReference Include="NUnit.Analyzers" Version="4.6.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="NUnit3TestAdapter" Version="5.0.0" />
+    <PackageReference Include="Spectre.Console.Testing" Version="0.49.1" />
+    <PackageReference Include="verify.Nunit" Version="28.12.0" />
+  </ItemGroup>
+
+</Project>

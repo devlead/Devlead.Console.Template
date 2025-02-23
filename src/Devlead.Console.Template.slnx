@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/templates/">
+    <Project Path="Devlead.Console.Template/DevleadConsole/DevleadConsole.csproj" />
+    <Project Path="Devlead.Console.Template/DevleadConsole.Tests/DevleadConsole.Tests.csproj" />
+  </Folder>
+  <Project Path="Devlead.Console.Template/Devlead.Console.Template.csproj" />
+</Solution>

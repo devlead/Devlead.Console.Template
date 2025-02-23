@@ -5,12 +5,13 @@
     <TargetFrameWork Condition="$(TargetFrameworks) == ''">TargetFrameworkValue</TargetFrameWork>
     <Nullable>enable</Nullable>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
   <ItemGroup>
-    <Using Include="devleadconsole.Commands" />
-    <Using Include="devleadconsole.Commands.Setting" />
-    <Using Include="devleadconsole.Commands.Validation" />
+    <Using Include="DevleadConsole.Commands" />
+    <Using Include="DevleadConsole.Commands.Setting" />
+    <Using Include="DevleadConsole.Commands.Validation" />
   </ItemGroup>
 
   <ItemGroup>
