@@ -78,8 +78,6 @@ Task("Clean")
     .Does<BuildData>(
         static (context, data) => context.CleanDirectories(data.DirectoryPathsToClean)
     )
-.Then("Build")
-    .Default()
     .Does<BuildData>(
         static (context, data) => context.DotNetMSBuild(
             data.ProjectRoot.FullPath,
@@ -87,7 +85,38 @@ Task("Clean")
                 .MSBuildSettings
         )
     )
+.Then("Restore")
+    .Does<BuildData>(
+        static (context, data) => context.DotNetRestore(
+            data.ProjectRoot.FullPath,
+            new DotNetRestoreSettings {
+                MSBuildSettings = data.MSBuildSettings
+            }
+        )
+    )
+.Then("Build")
+    .Does<BuildData>(
+        static (context, data) => context.DotNetBuild(
+            data.ProjectRoot.FullPath,
+            new DotNetBuildSettings {
+                NoRestore = true,
+                MSBuildSettings = data.MSBuildSettings
+            }
+        )
+    )
+.Then("Test")
+    .Does<BuildData>(
+        static (context, data) => context.DotNetTest(
+            data.ProjectRoot.FullPath,
+            new DotNetTestSettings {
+                NoBuild = true,
+                NoRestore = true,
+                MSBuildSettings = data.MSBuildSettings
+            }
+        )
+    )
 .Then("Integration-Tests")
+    .Default()
     .DoesForEach<BuildData, FilePath>(
         static (data, context)
             => context.GetFiles(data.BinaryOutputPath.FullPath + "/**/devleadconsole.dll").ToArray()

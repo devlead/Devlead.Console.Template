@@ -1,0 +1,22 @@
+﻿{
+  ExitCode: 0,
+  ConsoleOutput: ,
+  LogOutput: [
+    {
+      Level: Information,
+      Message: Mandatory: mandatoryValue
+    },
+    {
+      Level: Information,
+      Message: Optional: (null)
+    },
+    {
+      Level: Information,
+      Message: CommandOptionFlag: False
+    },
+    {
+      Level: Information,
+      Message: CommandOptionValue: (null)
+    }
+  ]
+}
