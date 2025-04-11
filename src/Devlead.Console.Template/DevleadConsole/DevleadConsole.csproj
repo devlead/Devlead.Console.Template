@@ -10,12 +10,12 @@
 
   <ItemGroup>
     <Using Include="DevleadConsole.Commands" />
-    <Using Include="DevleadConsole.Commands.Setting" />
+    <Using Include="DevleadConsole.Commands.Settings" />
     <Using Include="DevleadConsole.Commands.Validation" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Devlead.Console" Version="2025.4.10.149" />
+    <PackageReference Include="Devlead.Console" Version="2025.4.11.154" />
   </ItemGroup>
 
 </Project>

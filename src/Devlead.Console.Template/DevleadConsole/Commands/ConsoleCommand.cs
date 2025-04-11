@@ -1,7 +1,3 @@
-using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
-using Spectre.Console.Cli;
-
 namespace DevleadConsole.Commands;
 
 public class ConsoleCommand(ILogger<ConsoleCommand> logger)
