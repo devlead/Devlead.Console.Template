@@ -27,7 +27,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Devlead.Testing.MockHttp" Version="2025.6.11.191" />
-    <PackageReference Include="Microsoft.Extensions.Diagnostics.Testing" Version="9.6.0" />
+    <PackageReference Include="Microsoft.Extensions.Diagnostics.Testing" Version="9.7.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
     <PackageReference Include="NUnit" Version="4.3.2" />
     <PackageReference Include="NUnit.Analyzers" Version="4.9.2">
