@@ -27,7 +27,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All"/>
-    <PackageReference Include="NuGetizer" Version="1.2.4" PrivateAssets="All"/>
+    <PackageReference Include="NuGetizer" Version="1.3.0" PrivateAssets="All"/>
   </ItemGroup>
 
 </Project>
