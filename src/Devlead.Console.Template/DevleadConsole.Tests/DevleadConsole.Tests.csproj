@@ -27,16 +27,16 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Devlead.Testing.MockHttp" Version="2025.8.6.257" />
-    <PackageReference Include="Microsoft.Extensions.Diagnostics.Testing" Version="9.7.0" />
+    <PackageReference Include="Microsoft.Extensions.Diagnostics.Testing" Version="9.8.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
-    <PackageReference Include="NUnit" Version="4.3.2" />
-    <PackageReference Include="NUnit.Analyzers" Version="4.9.2">
+    <PackageReference Include="NUnit" Version="4.4.0" />
+    <PackageReference Include="NUnit.Analyzers" Version="4.10.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="NUnit3TestAdapter" Version="5.0.0" />
-    <PackageReference Include="Spectre.Console.Testing" Version="0.50.0" />
-    <PackageReference Include="verify.Nunit" Version="30.5.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="5.1.0" />
+    <PackageReference Include="Spectre.Console.Testing" Version="0.51.1" />
+    <PackageReference Include="verify.Nunit" Version="30.11.0" />
   </ItemGroup>
 
 </Project>
