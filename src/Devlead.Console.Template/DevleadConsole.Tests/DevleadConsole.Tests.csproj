@@ -28,7 +28,7 @@
     </PackageReference>
     <PackageReference Include="Devlead.Testing.MockHttp" Version="2025.9.10.304" />
     <PackageReference Include="Microsoft.Extensions.Diagnostics.Testing" Version="9.9.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.0" />
     <PackageReference Include="NUnit" Version="4.4.0" />
     <PackageReference Include="NUnit.Analyzers" Version="4.10.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
