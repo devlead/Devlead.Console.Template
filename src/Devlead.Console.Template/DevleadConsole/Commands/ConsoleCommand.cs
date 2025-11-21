@@ -3,7 +3,7 @@ namespace DevleadConsole.Commands;
 public class ConsoleCommand(ILogger<ConsoleCommand> logger)
     : AsyncCommand<ConsoleSettings>
 {
-    public override async Task<int> ExecuteAsync(CommandContext context, ConsoleSettings settings)
+    public override async Task<int> ExecuteAsync(CommandContext context, ConsoleSettings settings, CancellationToken cancellationToken)
     {
         logger.LogInformation("Mandatory: {Mandatory}", settings.Mandatory);
         logger.LogInformation("Optional: {Optional}", settings.Optional);
