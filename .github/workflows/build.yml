@@ -11,6 +11,10 @@ jobs:
   build:
     name: Build
     runs-on: ${{ matrix.os }}
+    permissions:
+      contents: write
+      id-token: write
+      packages: write
     strategy:
       fail-fast: false
       matrix:
@@ -45,7 +49,7 @@ jobs:
           NuGetReportSettings_WorkspaceId: ${{ secrets.NUGETREPORTSETTINGS_WORKSPACEID }}
           GH_PACKAGES_NUGET_SOURCE: ${{ secrets.GH_PACKAGES_NUGET_SOURCE }}
           NUGET_SOURCE: ${{ secrets.NUGET_SOURCE }}
-          NUGET_APIKEY: ${{ secrets.NUGET_APIKEY }}
+          NUGET_APIKEY: ${{steps.login.outputs.NUGET_API_KEY}}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           cake-version: tool-manifest
