@@ -47,7 +47,7 @@ Setup(
             (data, msbuildsetting) => new DotNetMSBuildSettings
                                                                 {
                                                                     ArgumentCustomization = args => args
-                                                                                                        .AppendQuoted("/property:TargetFrameworks=\\\"net8.0;net9.0\\\"")
+                                                                                                        .AppendQuoted("/property:TargetFrameworks=\\\"net8.0;net9.0;net10.0\\\"")
                                                                                                         .Append(msbuildsetting.Targets.Contains("Pack") ? string.Empty : "-restore"),
                                                                 }
                                                                     .SetConfiguration("Release")
@@ -77,13 +77,6 @@ Setup(
 Task("Clean")
     .Does<BuildData>(
         static (context, data) => context.CleanDirectories(data.DirectoryPathsToClean)
-    )
-    .Does<BuildData>(
-        static (context, data) => context.DotNetMSBuild(
-            data.ProjectRoot.FullPath,
-            data
-                .MSBuildSettings
-        )
     )
 .Then("Restore")
     .Does<BuildData>(
