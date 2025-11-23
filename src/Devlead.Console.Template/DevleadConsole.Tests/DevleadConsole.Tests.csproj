@@ -26,17 +26,19 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Devlead.Testing.MockHttp" Version="2025.9.10.304" />
-    <PackageReference Include="Microsoft.Extensions.Diagnostics.Testing" Version="9.9.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageReference Include="Devlead.Testing.MockHttp" Version="2025.11.22.500" />
+    <PackageReference Include="Microsoft.Extensions.Diagnostics.Testing" Version="8.10.0" Condition="'$(TargetFramework)' == 'net8.0'" />
+    <PackageReference Include="Microsoft.Extensions.Diagnostics.Testing" Version="9.10.0" Condition="'$(TargetFramework)' == 'net9.0'" />
+    <PackageReference Include="Microsoft.Extensions.Diagnostics.Testing" Version="10.0.0" Condition="'$(TargetFramework)' == 'net10.0'" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
     <PackageReference Include="NUnit" Version="4.4.0" />
-    <PackageReference Include="NUnit.Analyzers" Version="4.10.0">
+    <PackageReference Include="NUnit.Analyzers" Version="4.11.2">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="NUnit3TestAdapter" Version="5.1.0" />
-    <PackageReference Include="Spectre.Console.Testing" Version="0.51.1" />
-    <PackageReference Include="verify.Nunit" Version="30.11.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="5.2.0" />
+    <PackageReference Include="Spectre.Console.Testing" Version="0.54.0" />
+    <PackageReference Include="verify.Nunit" Version="31.7.2" />
   </ItemGroup>
 
 </Project>
