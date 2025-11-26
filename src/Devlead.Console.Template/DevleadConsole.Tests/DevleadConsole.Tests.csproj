@@ -26,7 +26,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Devlead.Testing.MockHttp" Version="2025.11.22.500" />
+    <PackageReference Include="Devlead.Testing.MockHttp" Version="2025.11.25.508" />
     <PackageReference Include="Microsoft.Extensions.Diagnostics.Testing" Version="8.10.0" Condition="'$(TargetFramework)' == 'net8.0'" />
     <PackageReference Include="Microsoft.Extensions.Diagnostics.Testing" Version="9.10.0" Condition="'$(TargetFramework)' == 'net9.0'" />
     <PackageReference Include="Microsoft.Extensions.Diagnostics.Testing" Version="10.0.0" Condition="'$(TargetFramework)' == 'net10.0'" />
