@@ -1,24 +1,22 @@
-// Install .NET Core Global tools.
-#tool "dotnet:https://api.nuget.org/v3/index.json?package=GitVersion.Tool&version=6.5.1"
-
-#load "build/records.cake"
-#load "build/helpers.cake"
+#:sdk Cake.Sdk@6.0.0
+#:property IncludeAdditionalFiles=./build/*.cs
 
 /*****************************
  * Setup
  *****************************/
 Setup(
     static context => {
+        InstallTool("dotnet:https://api.nuget.org/v3/index.json?package=GitVersion.Tool&version=6.5.1");
+        InstallTool("dotnet:https://api.nuget.org/v3/index.json?package=DPI&version=2025.12.17.349");
 
         var assertedVersions = context.GitVersion(new GitVersionSettings
             {
                 OutputType = GitVersionOutput.Json
             });
 
-        var gh = context.GitHubActions();
         var buildDate = DateTime.UtcNow;
-        var runNumber = gh.IsRunningOnGitHubActions
-                            ? gh.Environment.Workflow.RunNumber
+        var runNumber = GitHubActions.IsRunningOnGitHubActions
+                            ? GitHubActions.Environment.Workflow.RunNumber
                             : (short)((buildDate - buildDate.Date).TotalSeconds/3);
         var version = FormattableString
                         .Invariant($"{buildDate:yyyy.M.d}.{runNumber}");
@@ -63,7 +61,7 @@ Setup(
                                                                     .WithProperty("PackageProjectUrl", "https://github.com/devlead/Devlead.Console.Template")
                                                                     .WithProperty("RepositoryUrl", "https://github.com/devlead/Devlead.Console.Template.git")
                                                                     .WithProperty("RepositoryType", "git")
-                                                                    .WithProperty("ContinuousIntegrationBuild", gh.IsRunningOnGitHubActions ? "true" : "false")
+                                                                    .WithProperty("ContinuousIntegrationBuild", GitHubActions.IsRunningOnGitHubActions ? "true" : "false")
                                                                     .WithProperty("EmbedUntrackedSources", "true")
                                                                     .WithProperty("PackageOutputPath", data.NuGetOutputPath.FullPath)
                                                                     .WithProperty("BaseOutputPath", data.BinaryOutputPath.FullPath + "/")
@@ -144,26 +142,22 @@ Task("Clean")
     .DeferOnError()
 .Then("DPI")
     .Does<BuildData>(
-        static (context, data) => context.DotNetTool(
-                "tool",
-                new DotNetToolSettings {
-                    ArgumentCustomization = args => args
-                                                        .Append("run")
-                                                        .Append("dpi")
-                                                        .Append("nuget")
-                                                        .Append("--silent")
-                                                        .AppendSwitchQuoted("--output", "table")
-                                                        .Append(
-                                                            (
-                                                                !string.IsNullOrWhiteSpace(context.EnvironmentVariable("NuGetReportSettings_SharedKey"))
-                                                                &&
-                                                                !string.IsNullOrWhiteSpace(context.EnvironmentVariable("NuGetReportSettings_WorkspaceId"))
-                                                            )
-                                                                ? "report"
-                                                                : "analyze"
-                                                            )
-                                                        .AppendSwitchQuoted("--buildversion", data.Version)
-                }
+        static (context, data) => Command(
+                ["dpi", "dpi.exe"],
+                new ProcessArgumentBuilder()
+                    .Append("nuget")
+                    .Append("--silent")
+                    .AppendSwitchQuoted("--output", "table")
+                    .Append(
+                        (
+                            !string.IsNullOrWhiteSpace(context.EnvironmentVariable("NuGetReportSettings_SharedKey"))
+                            &&
+                            !string.IsNullOrWhiteSpace(context.EnvironmentVariable("NuGetReportSettings_WorkspaceId"))
+                        )
+                            ? "report"
+                            : "analyze"
+                        )
+                    .AppendSwitchQuoted("--buildversion", data.Version)
             )
     )
 .Then("Pack")
@@ -180,10 +174,9 @@ Task("Clean")
 .Then("Upload-Artifacts")
     .WithCriteria(BuildSystem.IsRunningOnGitHubActions, nameof(BuildSystem.IsRunningOnGitHubActions))
     .Does<BuildData>(
-        static (context, data) => context
-            .GitHubActions()
-            .Commands
-            .UploadArtifact(data.ArtifactsPath, "artifacts")
+        static (context, data) => GitHubActions
+                                    .Commands
+                                    .UploadArtifact(data.ArtifactsPath, "artifacts")
     )
 .Then("Push-GitHub-Packages")
     .WithCriteria<BuildData>( (context, data) => data.ShouldPushGitHubPackages())
