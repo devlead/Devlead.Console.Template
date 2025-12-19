@@ -15,15 +15,15 @@ public record BuildData(
     public DirectoryPath NuGetOutputPath { get; } = OutputPath.Combine("nuget");
     public DirectoryPath BinaryOutputPath { get; } = OutputPath.Combine("bin");
 
-    public string GitHubNuGetSource { get; } = System.Environment.GetEnvironmentVariable("GH_PACKAGES_NUGET_SOURCE");
-    public string GitHubNuGetApiKey { get; } = System.Environment.GetEnvironmentVariable("GITHUB_TOKEN");
+    public string? GitHubNuGetSource { get; } = System.Environment.GetEnvironmentVariable("GH_PACKAGES_NUGET_SOURCE");
+    public string? GitHubNuGetApiKey { get; } = System.Environment.GetEnvironmentVariable("GITHUB_TOKEN");
 
     public bool ShouldPushGitHubPackages() => (IsMainBranch || IsDevelopmentBranch) &&
                                                 !string.IsNullOrWhiteSpace(GitHubNuGetSource)
                                                 && !string.IsNullOrWhiteSpace(GitHubNuGetApiKey);
 
-    public string NuGetSource { get; } = System.Environment.GetEnvironmentVariable("NUGET_SOURCE");
-    public string NuGetApiKey { get; } = System.Environment.GetEnvironmentVariable("NUGET_APIKEY");
+    public string? NuGetSource { get; } = System.Environment.GetEnvironmentVariable("NUGET_SOURCE");
+    public string? NuGetApiKey { get; } = System.Environment.GetEnvironmentVariable("NUGET_APIKEY");
     public bool ShouldPushNuGetPackages() =>    IsMainBranch &&
                                                 !string.IsNullOrWhiteSpace(NuGetSource) &&
                                                 !string.IsNullOrWhiteSpace(NuGetApiKey);
@@ -37,4 +37,4 @@ public record BuildData(
     public DotNetMSBuildSettings MSBuildSettings => msBuildSettings ??= MSBuildSettingsCustomization(this, new DotNetMSBuildSettings());
 }
 
-private record ExtensionHelper(Func<string, CakeTaskBuilder> TaskCreate, Func<CakeReport> Run);
+internal record ExtensionHelper(Func<string, CakeTaskBuilder> TaskCreate, Func<CakeReport> Run);

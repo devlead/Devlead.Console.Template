@@ -52,5 +52,5 @@ jobs:
           NUGET_APIKEY: ${{steps.login.outputs.NUGET_API_KEY}}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          cake-version: tool-manifest
+          file-path: cake.cs
           target: GitHub-Actions
