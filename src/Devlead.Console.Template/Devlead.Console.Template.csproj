@@ -26,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="NuGetizer" Version="1.4.6" PrivateAssets="All"/>
+    <PackageReference Include="NuGetizer" Version="1.4.7" PrivateAssets="All"/>
   </ItemGroup>
 
 </Project>
