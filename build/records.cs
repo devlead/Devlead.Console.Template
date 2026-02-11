@@ -33,7 +33,7 @@ public record BuildData(
         OutputPath
     };
 
-    private DotNetMSBuildSettings msBuildSettings;
+    private DotNetMSBuildSettings? msBuildSettings;
     public DotNetMSBuildSettings MSBuildSettings => msBuildSettings ??= MSBuildSettingsCustomization(this, new DotNetMSBuildSettings());
 }
 
