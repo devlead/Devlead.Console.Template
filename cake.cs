@@ -7,7 +7,7 @@
 Setup(
     static context => {
         InstallTool("dotnet:https://api.nuget.org/v3/index.json?package=GitVersion.Tool&version=6.5.1");
-        InstallTool("dotnet:https://api.nuget.org/v3/index.json?package=DPI&version=2025.12.17.349");
+        InstallTool("dotnet:https://api.nuget.org/v3/index.json?package=DPI&version=2026.2.11.364");
 
         var assertedVersions = context.GitVersion(new GitVersionSettings
             {
