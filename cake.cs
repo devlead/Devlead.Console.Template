@@ -1,4 +1,4 @@
-#:sdk Cake.Sdk@6.1.0
+#:sdk Cake.Sdk@6.1.1
 #:property IncludeAdditionalFiles=./build/*.cs
 
 /*****************************
