@@ -37,7 +37,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="NUnit3TestAdapter" Version="6.2.0" />
-    <PackageReference Include="Spectre.Console.Testing" Version="0.56.0" />
+    <PackageReference Include="Spectre.Console.Testing" Version="0.57.0" />
     <PackageReference Include="verify.Nunit" Version="31.19.1" />
   </ItemGroup>
 
