@@ -1,32 +1,44 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <PackageType>Template</PackageType>
-    <AssemblyName>Devlead.Console.Template</AssemblyName>
-    <Title>Devlead console templates for the .NET SDK.</Title>
-    <IsPackable>true</IsPackable>
-    <PackBuildOutput>false</PackBuildOutput>
-    <IncludeContentInPack>true</IncludeContentInPack>
-    <IncludeBuildOutput>false</IncludeBuildOutput>
-    <ContentTargetFolders>content</ContentTargetFolders>
-    <NoWarn>$(NoWarn)</NoWarn>
-    <NoPackageAnalysis>true</NoPackageAnalysis>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageFile Include="templates/**/*" Exclude="templates/**/obj/**;templates/**/bin/**" PackagePath="$(ContentTargetFolders)\%(RelativeDir)%(Filename)%(Extension)" />
-    <PackageFile Include="DevleadConsole/**/*" Exclude="DevleadConsole/**/obj/**;DevleadConsole/**/bin/**" PackagePath="$(ContentTargetFolders)\templates\DevleadConsole\%(RelativeDir)%(Filename)%(Extension)" />
-    <PackageFile Include="DevleadConsole.Tests/**/*" Exclude="DevleadConsole.Tests/**/obj/**;DevleadConsole.Tests/**/bin/**" PackagePath="$(ContentTargetFolders)\templates\DevleadConsoleNunit\%(RelativeDir)%(Filename)%(Extension)" />
-    <PackageFile Include="DevleadConsole/**/*" Exclude="DevleadConsole/**/obj/**;DevleadConsole/**/bin/**" PackagePath="$(ContentTargetFolders)\templates\DevleadConsoleNunit\%(RelativeDir)%(Filename)%(Extension)" />
-    <!--<Content Include="../templates/**/*" Exclude="../templates/**/bin/**;../templates/**/obj/**" /> -->
-    <Compile Remove="**/*" />
-    <None Include="../devlead.png" Pack="true" PackagePath=""/>
-    <None Include="../../README.md" Pack="true" PackagePath="/" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="NuGetizer" Version="1.4.7" PrivateAssets="All"/>
-  </ItemGroup>
-
-</Project>
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <PackageType>Template</PackageType>
+    <AssemblyName>Devlead.Console.Template</AssemblyName>
+    <Title>Devlead console templates for the .NET SDK.</Title>
+    <IsPackable>true</IsPackable>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <IncludeContentInPack>true</IncludeContentInPack>
+    <NoPackageAnalysis>true</NoPackageAnalysis>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="**/*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="templates/**/*"
+          Exclude="templates/**/obj/**;templates/**/bin/**"
+          Pack="true"
+          PackagePath="content/%(RelativeDir)%(Filename)%(Extension)"
+          Visible="false" />
+    <None Include="DevleadConsole/**/*"
+          Exclude="DevleadConsole/**/obj/**;DevleadConsole/**/bin/**"
+          Pack="true"
+          PackagePath="content/templates/DevleadConsole/%(RelativeDir)%(Filename)%(Extension)"
+          Visible="false" />
+    <None Include="DevleadConsole.Tests/**/*"
+          Exclude="DevleadConsole.Tests/**/obj/**;DevleadConsole.Tests/**/bin/**"
+          Pack="true"
+          PackagePath="content/templates/DevleadConsolenunit/%(RelativeDir)%(Filename)%(Extension)"
+          Visible="false" />
+    <None Include="DevleadConsole/**/*"
+          Exclude="DevleadConsole/**/obj/**;DevleadConsole/**/bin/**"
+          Pack="true"
+          PackagePath="content/templates/DevleadConsolenunit/%(RelativeDir)%(Filename)%(Extension)"
+          Visible="false" />
+    <None Include="../devlead.png" Pack="true" PackagePath="" Visible="false" />
+    <None Include="../../README.md" Pack="true" PackagePath="" Visible="false" />
+  </ItemGroup>
+
+</Project>
+
