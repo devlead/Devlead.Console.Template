@@ -1,3 +1,4 @@
+#!/usr/bin/env dotnet
 #:sdk Cake.Sdk@6.2.0
 #:property IncludeAdditionalFiles=./build/*.cs
 
@@ -162,13 +163,17 @@ Task("Clean")
     )
 .Then("Pack")
     .Does<BuildData>(
-        static (context, data) => context.DotNetMSBuild(
+        static (context, data) => context.DotNetPack(
             data.TemplateProject.FullPath,
-            data
-                .MSBuildSettings
-                .WithTarget("Pack")
-                .WithProperty("_IsPacking", "true")
-                .WithProperty("NoBuild", "true")
+            new DotNetPackSettings {
+                NoBuild = true,
+                NoRestore = true,
+                OutputDirectory = data.NuGetOutputPath,
+                ArgumentCustomization = args => args.Append("/m:1"),
+                MSBuildSettings = data.MSBuildSettingsCustomization(
+                    data,
+                    new DotNetMSBuildSettings())
+            }
         )
     )
 .Then("Upload-Artifacts")
