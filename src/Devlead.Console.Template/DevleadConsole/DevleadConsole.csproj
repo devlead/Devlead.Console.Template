@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Devlead.Console" Version="2026.6.23.767" />
+    <PackageReference Include="Devlead.Console" Version="2026.6.30.782" />
   </ItemGroup>
 
 </Project>
