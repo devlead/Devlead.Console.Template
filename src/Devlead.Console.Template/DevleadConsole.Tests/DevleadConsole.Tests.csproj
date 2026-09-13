@@ -38,7 +38,7 @@
     </PackageReference>
     <PackageReference Include="NUnit3TestAdapter" Version="6.3.0" />
     <PackageReference Include="Spectre.Console.Testing" Version="0.57.2" />
-    <PackageReference Include="verify.Nunit" Version="32.0.1" />
+    <PackageReference Include="verify.Nunit" Version="33.0.0" />
   </ItemGroup>
 
 </Project>
