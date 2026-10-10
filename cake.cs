@@ -39,6 +39,8 @@ Setup(
             version,
             isMainBranch,
             isDevelopmentBranch,
+            GitHubActions.IsRunningOnGitHubActions,
+            GitHubActions.IsRunningOnGitHubActions ? GitHubActions.Environment.Workflow.Ref : null,
             "src",
             "src/Devlead.Console.Template/Devlead.Console.Template.csproj",
             artifactsPath,
@@ -46,7 +48,7 @@ Setup(
             (data, msbuildsetting) => new DotNetMSBuildSettings
                                                                 {
                                                                     ArgumentCustomization = args => args
-                                                                                                        .AppendQuoted("/property:TargetFrameworks=\\\"net8.0;net9.0;net10.0\\\"")
+                                                                                                        .AppendQuoted("/property:TargetFrameworks=\\\"net8.0;net9.0;net10.0;net11.0\\\"")
                                                                                                         .Append(msbuildsetting.Targets.Contains("Pack") ? string.Empty : "-restore"),
                                                                 }
                                                                     .SetConfiguration("Release")
@@ -73,7 +75,17 @@ Setup(
 /*****************************
  * Tasks
  *****************************/
-Task("Clean")
+Task("NuGet-Login")
+    .WithCriteria<BuildData>(static (_, data) => data.ShouldLoginNuGet())
+    .Does<BuildData>(static async (context, data) =>
+    {
+        ArgumentException.ThrowIfNullOrEmpty(data.NuGetApiUser);
+
+        context.Information("Logging in to NuGet...");
+        data.NuGetApiKey = await GitHubActions.Commands.NuGetLogin(data.NuGetApiUser);
+        ArgumentException.ThrowIfNullOrEmpty(data.NuGetApiKey);
+    })
+.Then("Clean")
     .Does<BuildData>(
         static (context, data) => context.CleanDirectories(data.DirectoryPathsToClean)
     )
