@@ -5,6 +5,8 @@ public record BuildData(
     string Version,
     bool IsMainBranch,
     bool IsDevelopmentBranch,
+    bool IsRunningOnGitHubActions,
+    string? WorkflowRef,
     DirectoryPath ProjectRoot,
     FilePath TemplateProject,
     DirectoryPath ArtifactsPath,
@@ -23,7 +25,14 @@ public record BuildData(
                                                 && !string.IsNullOrWhiteSpace(GitHubNuGetApiKey);
 
     public string? NuGetSource { get; } = System.Environment.GetEnvironmentVariable("NUGET_SOURCE");
-    public string? NuGetApiKey { get; } = System.Environment.GetEnvironmentVariable("NUGET_APIKEY");
+    public string? NuGetApiUser { get; } = System.Environment.GetEnvironmentVariable("NUGET_USER");
+    public string? NuGetApiKey { get; set; } = System.Environment.GetEnvironmentVariable("NUGET_APIKEY");
+
+    public bool ShouldLoginNuGet() =>
+        IsRunningOnGitHubActions
+        && (IsMainBranch
+            || (WorkflowRef?.StartsWith("refs/tags/v", StringComparison.Ordinal) ?? false));
+
     public bool ShouldPushNuGetPackages() =>    IsMainBranch &&
                                                 !string.IsNullOrWhiteSpace(NuGetSource) &&
                                                 !string.IsNullOrWhiteSpace(NuGetApiKey);

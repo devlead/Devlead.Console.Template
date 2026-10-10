@@ -25,22 +25,18 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install .NET SDK 8.0.x
+      - name: Install .NET SDK 8.0.x, 9.0.x & 10.0.x
         uses: actions/setup-dotnet@v6
         with:
-          dotnet-version: '8.0.x'
+          dotnet-version: |
+            8.0.x
+            9.0.x
+            10.0.x
 
       - name: Install .NET SDK
         uses: actions/setup-dotnet@v6
         with:
           global-json-file: global.json
-
-      - name: NuGet login (OIDC → temp API key)
-        uses: NuGet/login@v1
-        id: login
-        if: matrix.os == 'windows-latest' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v'))
-        with:
-          user: ${{secrets.NUGET_USER}}
 
       - name: Run Cake script
         uses: cake-build/cake-action@v3
@@ -49,7 +45,7 @@ jobs:
           NuGetReportSettings_WorkspaceId: ${{ secrets.NUGETREPORTSETTINGS_WORKSPACEID }}
           GH_PACKAGES_NUGET_SOURCE: ${{ secrets.GH_PACKAGES_NUGET_SOURCE }}
           NUGET_SOURCE: ${{ secrets.NUGET_SOURCE }}
-          NUGET_APIKEY: ${{steps.login.outputs.NUGET_API_KEY}}
+          NUGET_USER: ${{ secrets.NUGET_USER }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           file-path: cake.cs
