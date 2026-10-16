@@ -162,19 +162,7 @@ Task("NuGet-Login")
                     .Append("--silent")
                     .AppendSwitchQuoted("--output", "table")
                     .Append(
-                        (
-(
-                                !string.IsNullOrWhiteSpace(context.EnvironmentVariable("NuGetReportSettings_Endpoint"))
-                                &&
-                                !string.IsNullOrWhiteSpace(context.EnvironmentVariable("NuGetReportSettings_RuleId"))
-                            )
-                            ||
-                            (
-                                !string.IsNullOrWhiteSpace(context.EnvironmentVariable("NuGetReportSettings_SharedKey"))
-                                &&
-                                !string.IsNullOrWhiteSpace(context.EnvironmentVariable("NuGetReportSettings_WorkspaceId"))
-                            )
-                        )
+                        data.ShouldReportDPI()
                             ? "report"
                             : "analyze"
                         )
