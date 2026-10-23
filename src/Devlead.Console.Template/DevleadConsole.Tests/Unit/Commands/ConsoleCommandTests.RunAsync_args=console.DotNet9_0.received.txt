@@ -1,8 +1,0 @@
-﻿{
-  ExitCode: -1,
-  ConsoleOutput:
-Spectre.Console.Cli.CommandRuntimeException: Command 'console' is missing 
-required argument 'mandatory'.
-,
-  LogOutput: []
-}
