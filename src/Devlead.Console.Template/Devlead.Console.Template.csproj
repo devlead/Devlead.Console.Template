@@ -27,7 +27,7 @@
           PackagePath="content/templates/DevleadConsole/%(RelativeDir)%(Filename)%(Extension)"
           Visible="false" />
     <None Include="DevleadConsole.Tests/**/*"
-          Exclude="DevleadConsole.Tests/**/obj/**;DevleadConsole.Tests/**/bin/**"
+          Exclude="DevleadConsole.Tests/**/obj/**;DevleadConsole.Tests/**/bin/**;DevleadConsole.Tests/**/*.received.*"
           Pack="true"
           PackagePath="content/templates/DevleadConsolenunit/%(RelativeDir)%(Filename)%(Extension)"
           Visible="false" />
@@ -36,6 +36,14 @@
           Pack="true"
           PackagePath="content/templates/DevleadConsolenunit/%(RelativeDir)%(Filename)%(Extension)"
           Visible="false" />
+    <None Include="Directory.Packages.props"
+          Pack="true"
+          PackagePath="content/templates/DevleadConsole/Directory.Packages.props"
+          Visible="false" />
+    <None Include="Directory.Packages.props"
+          Pack="true"
+          PackagePath="content/templates/DevleadConsolenunit/Directory.Packages.props"
+          Visible="false" />
     <None Include="../devlead.png" Pack="true" PackagePath="" Visible="false" />
     <None Include="../../README.md" Pack="true" PackagePath="" Visible="false" />
   </ItemGroup>

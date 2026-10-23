@@ -349,3 +349,5 @@ MigrationBackup/
 .ionide/
 
 [Aa]rtifacts/
+# Verify
+*.received.*
