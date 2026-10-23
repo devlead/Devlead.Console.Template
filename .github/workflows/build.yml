@@ -19,6 +19,11 @@ jobs:
       fail-fast: false
       matrix:
         os: [windows-latest]
+    env:
+      TRUSTED_INGEST: ${{ (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop') }}
+      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
     steps:
       - name: Get the sources
         uses: actions/checkout@v7
@@ -38,11 +43,19 @@ jobs:
         with:
           global-json-file: global.json
 
+      - name: Azure login
+        if: ${{ env.TRUSTED_INGEST == 'true' && env.AZURE_CLIENT_ID != '' && env.AZURE_TENANT_ID != '' && env.AZURE_SUBSCRIPTION_ID != '' }}
+        uses: azure/login@v3
+        with:
+          client-id: ${{ env.AZURE_CLIENT_ID }}
+          tenant-id: ${{ env.AZURE_TENANT_ID }}
+          subscription-id: ${{ env.AZURE_SUBSCRIPTION_ID }}
+
       - name: Run Cake script
         uses: cake-build/cake-action@v3
         env:
-          NuGetReportSettings_SharedKey: ${{ secrets.NUGETREPORTSETTINGS_SHAREDKEY }}
-          NuGetReportSettings_WorkspaceId: ${{ secrets.NUGETREPORTSETTINGS_WORKSPACEID }}
+          NuGetReportSettings_Endpoint: ${{ env.TRUSTED_INGEST == 'true' && secrets.NUGETREPORTSETTINGS_ENDPOINT || '' }}
+          NuGetReportSettings_RuleId: ${{ env.TRUSTED_INGEST == 'true' && secrets.NUGETREPORTSETTINGS_RULEID || '' }}
           GH_PACKAGES_NUGET_SOURCE: ${{ secrets.GH_PACKAGES_NUGET_SOURCE }}
           NUGET_SOURCE: ${{ secrets.NUGET_SOURCE }}
           NUGET_USER: ${{ secrets.NUGET_USER }}
