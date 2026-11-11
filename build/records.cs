@@ -41,6 +41,14 @@ public record BuildData(
         !string.IsNullOrWhiteSpace(System.Environment.GetEnvironmentVariable("NuGetReportSettings_Endpoint"))
         && !string.IsNullOrWhiteSpace(System.Environment.GetEnvironmentVariable("NuGetReportSettings_RuleId"));
 
+    public string? AzureTenantId { get; } = System.Environment.GetEnvironmentVariable("AZURE_TENANT_ID");
+    public string? AzureClientId { get; } = System.Environment.GetEnvironmentVariable("AZURE_CLIENT_ID");
+
+    public bool ShouldPrepareAzureWorkloadIdentity() =>
+        IsRunningOnGitHubActions
+        && !string.IsNullOrWhiteSpace(AzureTenantId)
+        && !string.IsNullOrWhiteSpace(AzureClientId);
+
 
     public ICollection<DirectoryPath> DirectoryPathsToClean { get; } = new []{
         ArtifactsPath,
