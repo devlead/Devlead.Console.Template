@@ -30,12 +30,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install .NET SDK 8.0.x, 9.0.x & 10.0.x
+      - name: Install .NET SDK 10.0.x
         uses: actions/setup-dotnet@v6
         with:
           dotnet-version: |
-            8.0.x
-            9.0.x
             10.0.x
 
       - name: Install .NET SDK

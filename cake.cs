@@ -1,5 +1,5 @@
 #!/usr/bin/env dotnet
-#:sdk Cake.Sdk@6.3.0
+#:sdk Cake.Sdk@7.0.0
 #:property IncludeAdditionalFiles=./build/*.cs
 
 /*****************************
@@ -8,7 +8,7 @@
 Setup(
     static context => {
         InstallTool("dotnet:https://api.nuget.org/v3/index.json?package=GitVersion.Tool&version=6.7.0");
-        InstallTool("dotnet:https://api.nuget.org/v3/index.json?package=DPI&version=2026.10.26.544");
+        InstallTool("dotnet:https://api.nuget.org/v3/index.json?package=DPI&version=2026.11.11.551");
 
         var assertedVersions = context.GitVersion(new GitVersionSettings
             {
@@ -48,7 +48,7 @@ Setup(
             (data, msbuildsetting) => new DotNetMSBuildSettings
                                                                 {
                                                                     ArgumentCustomization = args => args
-                                                                                                        .AppendQuoted("/property:TargetFrameworks=\\\"net8.0;net9.0;net10.0;net11.0\\\"")
+                                                                                                        .Append("/property:TargetFrameworks=\\\"net10.0;net11.0\\\"")
                                                                                                         .Append(msbuildsetting.Targets.Contains("Pack") ? string.Empty : "-restore"),
                                                                 }
                                                                     .SetConfiguration("Release")
