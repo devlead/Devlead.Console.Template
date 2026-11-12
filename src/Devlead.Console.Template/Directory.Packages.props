@@ -6,8 +6,8 @@
 
   <ItemGroup>
     <PackageVersion Include="coverlet.collector" Version="10.1.0" />
-    <PackageVersion Include="Devlead.Console" Version="2026.11.11.1030" />
-    <PackageVersion Include="Devlead.Testing.MockHttp" Version="2026.11.11.1083" />
+    <PackageVersion Include="Devlead.Console" Version="2026.11.12.1057" />
+    <PackageVersion Include="Devlead.Testing.MockHttp" Version="2026.11.12.1105" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.12.0" />
     <PackageVersion Include="NUnit" Version="5.0.0" />
     <PackageVersion Include="NUnit.Analyzers" Version="4.15.0" />
