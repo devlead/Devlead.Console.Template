@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageVersion Include="coverlet.collector" Version="10.1.0" />
+    <PackageVersion Include="coverlet.collector" Version="10.1.1" />
     <PackageVersion Include="Devlead.Console" Version="2026.11.12.1057" />
     <PackageVersion Include="Devlead.Testing.MockHttp" Version="2026.11.12.1105" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.12.0" />
