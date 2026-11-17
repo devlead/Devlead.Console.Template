@@ -39,7 +39,7 @@ jobs:
           global-json-file: global.json
 
       - name: Run Cake script
-        uses: cake-build/cake-action@v3
+        uses: cake-build/cake-action@v4
         env:
           NuGetReportSettings_Endpoint: ${{ env.TRUSTED_INGEST == 'true' && secrets.NUGETREPORTSETTINGS_ENDPOINT || '' }}
           NuGetReportSettings_RuleId: ${{ env.TRUSTED_INGEST == 'true' && secrets.NUGETREPORTSETTINGS_RULEID || '' }}
